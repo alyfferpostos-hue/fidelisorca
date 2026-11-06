@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ORÇAPDF - Gerador de Orçamento Grátis em PDF | Faça Propostas Rápidas</title>
-    <meta name="description" content="Crie e baixe orçamentos profissionais em PDF gratuitamente. Ideal para autônomos, prestadores de serviço e MEI. Salve seus dados e personalize seu orçamento na hora.">
-    <meta name="keywords" content="gerador de orçamento, orçamento pdf, criar orçamento grátis, orçamento mei, proposta comercial pdf">
+    <title>FidelisOrça - Gerador de Orçamento Grátis em PDF | Faça Propostas Rápidas</title>
+    <meta name="description" content="Crie e baixe orçamentos profissionais em PDF gratuitamente com o FidelisOrça. Ideal para autônomos, prestadores de serviço e MEI. Salve seus dados e personalize seu orçamento na hora.">
+    <meta name="keywords" content="fidelisorça, gerador de orçamento, orçamento pdf, criar orçamento grátis, orçamento mei, proposta comercial pdf">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://orcapdf.com.br/">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -18,12 +17,17 @@
     <!-- Fontes Google -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Open+Dyslexic&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Open+Dyslexic&display=swap" rel="stylesheet">
 
     <style>
+        :root {
+            --theme-color: #2563eb;
+        }
+
         body { font-family: 'Inter', sans-serif; }
         .font-dyslexic { font-family: 'Open Dyslexic', sans-serif !important; }
-        
+        .font-serif-custom { font-family: 'Merriweather', serif !important; }
+
         /* Estilos de Alto Contraste */
         body.high-contrast {
             background-color: #000000 !important;
@@ -47,27 +51,128 @@
             border: 2px solid #FFFF00 !important;
         }
 
-        /* Configurações de Impressão A4 */
+        /* Classes de Cor Dinâmica */
+        .theme-accent-bg { background-color: var(--theme-color) !important; color: #ffffff !important; }
+        .theme-accent-text { color: var(--theme-color) !important; }
+        .theme-accent-border { border-color: var(--theme-color) !important; }
+
+        /* Estilos dos 3 Modelos Visuais Executivos */
+        
+        /* 1. MODELO CLÁSSICO (Banner Superior Executivo) */
+        .template-classico {
+            border-top: 10px solid var(--theme-color) !important;
+            font-family: 'Inter', sans-serif;
+        }
+        .template-classico .preview-header-box {
+            background: #f8fafc;
+            border-bottom: 2px solid var(--theme-color);
+        }
+        .template-classico .table-header-style {
+            background-color: #f1f5f9;
+            color: #475569;
+            border-bottom: 2px solid #cbd5e1;
+        }
+
+        /* 2. MODELO MODERNO (Barra Lateral Destacada + Cabeçalho Colorido) */
+        .template-moderno {
+            border-left: 12px solid var(--theme-color) !important;
+            border-top: 1px solid #e2e8f0;
+            font-family: 'Inter', sans-serif;
+        }
+        .template-moderno .preview-header-box {
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .template-moderno .table-header-style {
+            background-color: var(--theme-color) !important;
+            color: #ffffff !important;
+        }
+        .template-moderno .table-header-style th {
+            color: #ffffff !important;
+        }
+
+        /* 3. MODELO MINIMALISTA (Elegante, Editorial, Tipografia Serifada) */
+        .template-minimalista {
+            border: 1px solid #94a3b8 !important;
+            font-family: 'Merriweather', serif !important;
+        }
+        .template-minimalista .preview-header-box {
+            background: transparent !important;
+            border-bottom: 1px dashed #cbd5e1 !important;
+        }
+        .template-minimalista .table-header-style {
+            background-color: transparent !important;
+            color: #1e293b !important;
+            border-bottom: 1px solid #1e293b !important;
+            font-weight: 700;
+        }
+        .template-minimalista .total-card {
+            background: transparent !important;
+            border: 1px solid #1e293b !important;
+            color: #0f172a !important;
+        }
+
+        /* Marca D'água Elegante de Fundo */
+        .watermark-bg {
+            position: absolute;
+            bottom: 40px;
+            right: 40px;
+            font-size: 3.5rem;
+            font-weight: 900;
+            opacity: 0.03;
+            pointer-events: none;
+            user-select: none;
+            letter-spacing: 0.1em;
+            color: #000;
+        }
+
+        /* Regras de Impressão e Geração de PDF */
         @media print {
-            body { background: white !important; color: black !important; font-size: 12pt; }
-            .no-print, header, footer, nav, .accessibility-bar, .adsense-slot, .form-section, .action-buttons {
+            @page {
+                size: A4 portrait;
+                margin: 8mm;
+            }
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            html, body {
+                background: #ffffff !important;
+                color: #000000 !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                font-size: 11pt;
+            }
+            .no-print, header, footer, nav, .accessibility-bar, .adsense-slot, .form-section, .action-buttons, .preview-label-bar {
                 display: none !important;
             }
-            .print-area {
+            main {
                 display: block !important;
                 width: 100% !important;
                 margin: 0 !important;
                 padding: 0 !important;
-                box-shadow: none !important;
-                border: none !important;
             }
-            .page-break { page-break-after: always; }
+            section {
+                width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            .sticky {
+                position: static !important;
+            }
+            .print-area {
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: space-between !important;
+                width: 100% !important;
+                min-height: 275mm !important;
+                margin: 0 !important;
+                padding: 24px 28px !important;
+                box-shadow: none !important;
+                box-sizing: border-box !important;
+                page-break-after: avoid !important;
+            }
         }
-
-        /* Estilos dos Modelos de Folha */
-        .template-classico { border-top: 8px solid var(--theme-color, #2563eb); }
-        .template-moderno { border-left: 12px solid var(--theme-color, #2563eb); }
-        .template-minimalista { border: 1px solid #e2e8f0; font-family: 'Georgia', serif; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col transition-colors duration-200">
@@ -81,8 +186,8 @@
     <div class="accessibility-bar bg-slate-900 text-white text-xs py-2 px-4 no-print border-b border-slate-800">
         <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
             <div class="flex items-center space-x-2">
-                <i class="fa-solid font-bold fa-universal-access text-blue-400 text-sm" aria-hidden="true"></i>
-                <span class="font-semibold">Opções de Acessibilidade:</span>
+                <i class="fa-solid fa-universal-access text-blue-400 text-sm" aria-hidden="true"></i>
+                <span class="font-semibold">Acessibilidade:</span>
             </div>
             <div class="flex flex-wrap items-center gap-2">
                 <button onclick="toggleHighContrast()" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded border border-slate-700 flex items-center space-x-1" title="Alternar Alto Contraste" aria-label="Alternar Modo Alto Contraste">
@@ -108,7 +213,7 @@
                     <i class="fa-solid fa-file-invoice-dollar text-2xl" aria-hidden="true"></i>
                 </div>
                 <div>
-                    <h1 class="text-2xl font-bold text-slate-900 tracking-tight">ORÇA<span class="text-blue-600">PDF</span></h1>
+                    <h1 class="text-2xl font-bold text-slate-900 tracking-tight">FIDELIS<span class="text-blue-600">ORÇA</span></h1>
                     <p class="text-xs text-slate-500 font-medium">Gerador de Orçamentos Profissionais em PDF</p>
                 </div>
             </div>
@@ -126,7 +231,6 @@
     <!-- Espaço Publicitário - Top Banner (AdSense 728x90) -->
     <div class="max-w-7xl mx-auto px-4 pt-4 no-print w-full">
         <div class="adsense-slot bg-slate-100 border border-dashed border-slate-300 rounded-lg p-2 min-h-[90px] flex items-center justify-center text-center text-xs text-slate-400" aria-label="Espaço Publicitário">
-            <!-- Insira seu código Google AdSense aqui (Banner Topo 728x90) -->
             <span><i class="fa-solid fa-rectangle-ad mr-1" aria-hidden="true"></i> Anúncio Publicitário (Google AdSense)</span>
         </div>
     </div>
@@ -153,15 +257,15 @@
                     <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider">Estilo & Identidade Visual</label>
                     <div class="grid grid-cols-2 gap-3">
                         <div>
-                            <label for="select-modelo" class="block text-xs font-medium text-slate-600 mb-1">Modelo da Folha</label>
+                            <label for="select-modelo" class="block text-xs font-medium text-slate-600 mb-1">Modelo do Documento</label>
                             <select id="select-modelo" onchange="atualizarPreview()" class="w-full text-sm border-slate-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                                <option value="classico">Clássico (Barra Superior)</option>
+                                <option value="classico">Clássico Executivo</option>
                                 <option value="moderno">Moderno (Barra Lateral)</option>
-                                <option value="minimalista">Minimalista (Elegante)</option>
+                                <option value="minimalista">Minimalista Editorial</option>
                             </select>
                         </div>
                         <div>
-                            <label for="select-cor" class="block text-xs font-medium text-slate-600 mb-1">Cor Principal</label>
+                            <label for="select-cor" class="block text-xs font-medium text-slate-600 mb-1">Cor de Destaque</label>
                             <input type="color" id="select-cor" value="#2563eb" onchange="atualizarPreview()" class="w-full h-9 p-1 bg-white border border-slate-300 rounded-lg cursor-pointer">
                         </div>
                     </div>
@@ -173,7 +277,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                         <div>
                             <label for="empresa-nome" class="block text-xs font-medium text-slate-600">Nome / Razão Social</label>
-                            <input type="text" id="empresa-nome" oninput="atualizarPreview()" placeholder="Ex: Metta Serviços Elétricos" class="w-full text-sm border-slate-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                            <input type="text" id="empresa-nome" oninput="atualizarPreview()" placeholder="Ex: Silva Serviços Elétricos" class="w-full text-sm border-slate-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
                         </div>
                         <div>
                             <label for="empresa-doc" class="block text-xs font-medium text-slate-600">CPF / CNPJ</label>
@@ -241,8 +345,8 @@
 
                 <!-- Botões de Ação Principal -->
                 <div class="pt-4 border-t border-slate-100 flex flex-col sm:flex-row gap-3">
-                    <button onclick="window.print()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 px-6 rounded-xl shadow-md transition flex items-center justify-center gap-2 text-base">
-                        <i class="fa-solid fa-print" aria-hidden="true"></i> Imprimir / Salvar em PDF
+                    <button onclick="prepararEImprimir()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 px-6 rounded-xl shadow-md transition flex items-center justify-center gap-2 text-base">
+                        <i class="fa-solid fa-file-pdf" aria-hidden="true"></i> Imprimir / Salvar em PDF
                     </button>
                     <button onclick="limparFormulario()" class="w-full sm:w-auto bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-3.5 px-4 rounded-xl transition text-sm">
                         Limpar Tudo
@@ -256,76 +360,90 @@
         <section class="lg:col-span-6" aria-label="Visualização em tempo real do orçamento">
             <div class="sticky top-6 space-y-4">
                 
-                <div class="flex justify-between items-center no-print px-1">
+                <div class="preview-label-bar flex justify-between items-center no-print px-1">
                     <span class="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1">
                         <i class="fa-solid fa-eye text-blue-600" aria-hidden="true"></i> Pré-visualização do Documento
                     </span>
-                    <span class="text-xs text-slate-400">Tamanho Padrão A4</span>
+                    <span class="text-xs text-slate-400">Padrão Executivo A4</span>
                 </div>
 
-                <!-- Folha do Orçamento (A4 Renderizado) -->
-                <div id="folha-preview" class="print-area bg-white p-8 rounded-xl shadow-lg border border-slate-200 text-slate-800 min-h-[700px] flex flex-col justify-between template-classico transition-all">
+                <!-- Folha do Orçamento (Preview A4 Profissional) -->
+                <div id="folha-preview" class="print-area bg-white p-8 rounded-2xl shadow-lg border border-slate-200 text-slate-800 transition-all flex flex-col justify-between template-classico relative overflow-hidden min-h-[720px]">
                     
-                    <div>
+                    <div class="watermark-bg">PROPOSTA</div>
+
+                    <div class="relative z-10 space-y-6">
                         <!-- Header do Orçamento -->
-                        <div id="preview-header" class="flex justify-between items-start border-b border-slate-200 pb-6 mb-6">
-                            <div>
-                                <h2 id="prev-empresa-nome" class="text-2xl font-bold text-slate-900">Sua Empresa Aqui</h2>
-                                <p id="prev-empresa-doc" class="text-xs text-slate-500">CNPJ/CPF: 00.000.000/0001-00</p>
-                                <p id="prev-empresa-contato" class="text-xs text-slate-500">Tel: (00) 00000-0000 | E-mail: contato@empresa.com</p>
-                                <p id="prev-empresa-end" class="text-xs text-slate-500">Endereço da Empresa</p>
+                        <div id="preview-header" class="preview-header-box p-5 rounded-xl flex justify-between items-start gap-4">
+                            <div class="space-y-1">
+                                <h2 id="prev-empresa-nome" class="text-2xl font-extrabold text-slate-900 tracking-tight">Silva Serviços Elétricos</h2>
+                                <p id="prev-empresa-doc" class="text-xs text-slate-600 font-medium">CPF/CNPJ: 00.000.000/0001-00</p>
+                                <p id="prev-empresa-contato" class="text-xs text-slate-600">Tel: (00) 00000-0000 | E-mail: contato@empresa.com</p>
+                                <p id="prev-empresa-end" class="text-xs text-slate-500">Rua das Flores, 123 - São Paulo/SP</p>
                             </div>
-                            <div class="text-right">
-                                <span class="text-xs uppercase tracking-widest text-slate-400 font-bold block">ORÇAMENTO</span>
-                                <span id="prev-numero" class="text-lg font-bold text-blue-600 block">#0001</span>
-                                <span id="prev-data" class="text-xs text-slate-500 block">Data: --/--/----</span>
+                            <div class="text-right flex-shrink-0 bg-white p-3 rounded-lg border border-slate-200 shadow-sm">
+                                <span class="text-[10px] uppercase tracking-widest text-slate-500 font-extrabold block">ORÇAMENTO</span>
+                                <span id="prev-numero" class="text-lg font-bold theme-accent-text block">#0001</span>
+                                <span id="prev-data" class="text-xs text-slate-500 font-medium block">Data: --/--/----</span>
                             </div>
                         </div>
 
                         <!-- Dados do Cliente -->
-                        <div class="bg-slate-50 p-4 rounded-lg mb-6 border border-slate-100">
-                            <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Cliente</h3>
-                            <p id="prev-cliente-nome" class="text-base font-semibold text-slate-800">Nome do Cliente</p>
-                            <p id="prev-cliente-doc" class="text-xs text-slate-600">CPF/CNPJ: --</p>
-                            <p id="prev-cliente-tel" class="text-xs text-slate-600">Telefone: --</p>
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-1">
+                            <span class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest block mb-1">DADOS DO CLIENTE</span>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                                <div>
+                                    <p id="prev-cliente-nome" class="text-base font-bold text-slate-800">Nome do Cliente</p>
+                                    <p id="prev-cliente-doc" class="text-xs text-slate-600">CPF/CNPJ: --</p>
+                                </div>
+                                <div class="md:text-right">
+                                    <p id="prev-cliente-tel" class="text-xs text-slate-600">Telefone: --</p>
+                                    <p class="text-xs text-slate-500">Validade da Proposta: <strong id="prev-validade" class="text-slate-700">15 dias</strong></p>
+                                </div>
+                            </div>
                         </div>
 
-                        <!-- Tabela de Itens -->
-                        <div class="mb-6 overflow-x-auto">
+                        <!-- Tabela de Itens Detalhada -->
+                        <div class="overflow-hidden rounded-xl border border-slate-200">
                             <table class="w-full text-left border-collapse">
                                 <thead>
-                                    <tr class="border-b-2 border-slate-200 text-xs text-slate-500 uppercase">
-                                        <th class="py-2">Descrição</th>
-                                        <th class="py-2 text-center">Qtd</th>
-                                        <th class="py-2 text-right">Valor Unit.</th>
-                                        <th class="py-2 text-right">Total</th>
+                                    <tr id="prev-table-header" class="table-header-style text-xs font-bold uppercase tracking-wider">
+                                        <th class="py-3 px-4">Descrição dos Serviços / Produtos</th>
+                                        <th class="py-3 px-3 text-center w-16">Qtd</th>
+                                        <th class="py-3 px-4 text-right w-28">Valor Unit.</th>
+                                        <th class="py-3 px-4 text-right w-32">Total</th>
                                     </tr>
                                 </thead>
-                                <tbody id="prev-tabela-itens" class="divide-y divide-slate-100 text-sm">
+                                <tbody id="prev-tabela-itens" class="divide-y divide-slate-100 text-xs bg-white">
                                     <!-- Itens adicionados aparecem aqui -->
                                 </tbody>
                             </table>
                         </div>
 
-                        <!-- Totalizador -->
-                        <div class="flex justify-end mb-6">
-                            <div class="w-1/2 bg-slate-50 p-4 rounded-lg border border-slate-100 text-right space-y-1">
-                                <span class="text-xs text-slate-500 font-semibold block">VALOR TOTAL</span>
-                                <span id="prev-valor-total" class="text-2xl font-bold text-slate-900 block">R$ 0,00</span>
+                        <!-- Totalizador Executivo Limpo -->
+                        <div class="flex justify-end pt-2">
+                            <div class="total-card w-full sm:w-6/12 bg-slate-50 p-4 rounded-xl border border-slate-200 flex justify-between items-center shadow-sm">
+                                <div>
+                                    <span class="text-[10px] text-slate-500 font-bold uppercase tracking-widest block">TOTAL DA PROPOSTA</span>
+                                    <span class="text-[11px] text-slate-400">Valores em Reais (R$)</span>
+                                </div>
+                                <span id="prev-valor-total" class="text-2xl font-extrabold theme-accent-text block tracking-tight">R$ 0,00</span>
                             </div>
                         </div>
 
-                        <!-- Observações -->
-                        <div id="prev-obs-container" class="border-t border-slate-100 pt-4">
-                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Observações & Condições</h4>
-                            <p id="prev-obs" class="text-xs text-slate-600 whitespace-pre-line">Nenhuma observação informada.</p>
+                        <!-- Observações & Condições de Pagamento -->
+                        <div id="prev-obs-container" class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-1">
+                            <h4 class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest">OBSERVAÇÕES & CONDIÇÕES DE PAGAMENTO</h4>
+                            <p id="prev-obs" class="text-xs text-slate-700 whitespace-pre-line leading-relaxed">Nenhuma observação informada.</p>
                         </div>
                     </div>
 
                     <!-- Rodapé da Folha -->
-                    <div class="border-t border-slate-200 pt-4 mt-8 flex justify-between items-center text-[10px] text-slate-400">
-                        <span>Validade da proposta: <strong id="prev-validade">15 dias</strong></span>
-                        <span>Gerado pelo ORÇAPDF</span>
+                    <div class="relative z-10 border-t border-slate-200 pt-4 mt-8 flex justify-between items-center text-[11px] text-slate-400">
+                        <span class="flex items-center gap-1 font-medium text-slate-500">
+                            <i class="fa-solid fa-circle-check text-blue-600 text-xs"></i> Gerado pelo FidelisOrça
+                        </span>
+                        <span class="font-mono text-[10px] text-slate-400">Gerador de Orçamentos PDF</span>
                     </div>
 
                 </div>
@@ -338,7 +456,6 @@
     <!-- Espaço Publicitário - Banner Inferior (AdSense 300x250 ou Responsivo) -->
     <div class="max-w-7xl mx-auto px-4 py-4 no-print w-full">
         <div class="adsense-slot bg-slate-100 border border-dashed border-slate-300 rounded-lg p-4 min-h-[120px] flex items-center justify-center text-center text-xs text-slate-400" aria-label="Espaço Publicitário Conteúdo">
-            <!-- Insira seu código Google AdSense Bloco de Conteúdo aqui -->
             <span><i class="fa-solid fa-rectangle-ad mr-1" aria-hidden="true"></i> Anúncio Publicitário - Conteúdo (Google AdSense)</span>
         </div>
     </div>
@@ -375,7 +492,7 @@
                 
                 <details class="bg-slate-50 p-3 rounded-lg border border-slate-200">
                     <summary class="font-semibold text-sm text-slate-800 cursor-pointer">Os meus dados ficam salvos em algum servidor?</summary>
-                    <p class="text-xs text-slate-600 mt-2">Não! O ORÇAPDF prioriza sua privacidade. Todos os dados preenchidos ficam armazenados exclusivamente no navegador do seu próprio dispositivo (via localStorage).</p>
+                    <p class="text-xs text-slate-600 mt-2">Não! O FidelisOrça prioriza sua privacidade. Todos os dados preenchidos ficam armazenados exclusivamente no navegador do seu próprio dispositivo (via localStorage).</p>
                 </details>
 
                 <details class="bg-slate-50 p-3 rounded-lg border border-slate-200">
@@ -392,7 +509,7 @@
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
             
             <div class="flex items-center space-x-2">
-                <span class="font-bold text-white text-base">ORÇA<span class="text-blue-500">PDF</span></span>
+                <span class="font-bold text-white text-base">FIDELIS<span class="text-blue-500">ORÇA</span></span>
                 <span>© 2026 - Todos os direitos reservados.</span>
             </div>
 
@@ -408,6 +525,7 @@
     </footer>
 
     <!-- Modais Informativos (Políticas exigidas pelo AdSense) -->
+    
     <!-- Modal Privacidade -->
     <div id="modal-privacidade" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm hidden items-center justify-center p-4 z-50 no-print" role="dialog" aria-modal="true" aria-labelledby="priv-title">
         <div class="bg-white rounded-2xl max-w-xl w-full p-6 space-y-4 max-h-[90vh] overflow-y-auto">
@@ -416,7 +534,7 @@
                 <button onclick="closeModal('modal-privacidade')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
             <div class="text-xs text-slate-600 space-y-3">
-                <p>O ORÇAPDF valoriza a privacidade dos seus usuários. Não coletamos, armazenamos ou compartilhamos dados pessoais inseridos nos formulários de orçamento.</p>
+                <p>O FidelisOrça valoriza a privacidade dos seus usuários. Não coletamos, armazenamos ou compartilhamos dados pessoais inseridos nos formulários de orçamento.</p>
                 <p><strong>Cookies e Publicidade:</strong> Este site utiliza serviços de anúncios de terceiros, como o Google AdSense, que podem utilizar cookies para exibir anúncios relevantes com base em suas visitas anteriores a este ou outros sites.</p>
                 <p>O usuário pode gerenciar suas preferências de cookies através das configurações de seu navegador.</p>
             </div>
@@ -434,11 +552,49 @@
                 <button onclick="closeModal('modal-termos')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
             <div class="text-xs text-slate-600 space-y-3">
-                <p>O ORÇAPDF é uma ferramenta utilitária gratuita oferecida 'como está'. Não nos responsabilizamos por acordos comerciais, valores ou termos acordados entre os prestadores de serviço e seus respectivos clientes.</p>
+                <p>O FidelisOrça é uma ferramenta utilitária gratuita oferecida 'como está'. Não nos responsabilizamos por acordos comerciais, valores ou termos acordados entre os prestadores de serviço e seus respectivos clientes.</p>
                 <p>O usuário é inteiramente responsável pelas informações inseridas no documento gerado.</p>
             </div>
             <div class="text-right border-t pt-3">
                 <button onclick="closeModal('modal-termos')" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-xs font-bold">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Sobre o Projeto -->
+    <div id="modal-sobre" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm hidden items-center justify-center p-4 z-50 no-print" role="dialog" aria-modal="true" aria-labelledby="sobre-title">
+        <div class="bg-white rounded-2xl max-w-xl w-full p-6 space-y-4 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center border-b pb-3">
+                <h3 id="sobre-title" class="font-bold text-slate-900 text-base">Sobre o FidelisOrça</h3>
+                <button onclick="closeModal('modal-sobre')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div class="text-xs text-slate-600 space-y-3">
+                <p>O <strong>FidelisOrça</strong> foi desenvolvido com uma missão clara: criar ferramentas web gratuitas, acessíveis e rápidas que facilitem o dia a dia de trabalhadores autônomos, prestadores de serviço, estudantes e microempreendedores (MEI).</p>
+                <p>Nossa plataforma permite a criação e emissão de orçamentos profissionais em PDF sem necessidade de cadastros, mensalidades ou instalação de aplicativos.</p>
+                <p>Acreditamos na acessibilidade universal e no uso da tecnologia como agente facilitador de renda e trabalho digno.</p>
+            </div>
+            <div class="text-right border-t pt-3">
+                <button onclick="closeModal('modal-sobre')" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-xs font-bold">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Contato -->
+    <div id="modal-contato" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm hidden items-center justify-center p-4 z-50 no-print" role="dialog" aria-modal="true" aria-labelledby="contato-title">
+        <div class="bg-white rounded-2xl max-w-xl w-full p-6 space-y-4 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center border-b pb-3">
+                <h3 id="contato-title" class="font-bold text-slate-900 text-base">Fale Conosco</h3>
+                <button onclick="closeModal('modal-contato')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div class="text-xs text-slate-600 space-y-3">
+                <p>Dúvidas, sugestões de novos recursos ou parcerias? Entre em contato com a nossa equipe através do e-mail oficial de suporte:</p>
+                <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 text-center font-mono text-xs text-blue-600 font-bold">
+                    fidelisorca@gmail.com
+                </div>
+                <p class="text-[11px] text-slate-400 text-center">Respondemos em até 24 horas úteis.</p>
+            </div>
+            <div class="text-right border-t pt-3">
+                <button onclick="closeModal('modal-contato')" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-xs font-bold">Fechar</button>
             </div>
         </div>
     </div>
@@ -505,12 +661,12 @@
 
                 // Item no Preview
                 const tr = document.createElement('tr');
-                tr.className = 'border-b border-slate-100';
+                tr.className = 'border-b border-slate-100 hover:bg-slate-50/50 transition';
                 tr.innerHTML = `
-                    <td class="py-2 text-slate-800 font-medium">${item.descricao || 'Item sem descrição'}</td>
-                    <td class="py-2 text-center text-slate-600">${item.qtd}</td>
-                    <td class="py-2 text-right text-slate-600">R$ ${item.valor.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</td>
-                    <td class="py-2 text-right font-bold text-slate-800">R$ ${totalItem.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</td>
+                    <td class="py-3 px-4 text-slate-800 font-medium">${item.descricao || 'Item sem descrição'}</td>
+                    <td class="py-3 px-3 text-center text-slate-600 font-semibold">${item.qtd}</td>
+                    <td class="py-3 px-4 text-right text-slate-600">R$ ${item.valor.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</td>
+                    <td class="py-3 px-4 text-right font-bold text-slate-900">R$ ${totalItem.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</td>
                 `;
                 containerPrev.appendChild(tr);
             });
@@ -537,7 +693,7 @@
             renderizarItens();
         }
 
-        // Atualizar Preview em Tempo Real
+        // Atualizar Preview e Estilos em Tempo Real
         function atualizarPreview() {
             // Dados Empresa
             const empNome = document.getElementById('empresa-nome').value;
@@ -546,10 +702,10 @@
             const empEmail = document.getElementById('empresa-email').value;
             const empEnd = document.getElementById('empresa-endereco').value;
 
-            document.getElementById('prev-empresa-nome').innerText = empNome || 'Sua Empresa / Seu Nome';
+            document.getElementById('prev-empresa-nome').innerText = empNome || 'Silva Serviços Elétricos';
             document.getElementById('prev-empresa-doc').innerText = empDoc ? 'CPF/CNPJ: ' + empDoc : 'CPF/CNPJ: 00.000.000/0001-00';
             document.getElementById('prev-empresa-contato').innerText = `Tel: ${empTel || '(00) 00000-0000'} | E-mail: ${empEmail || 'contato@empresa.com'}`;
-            document.getElementById('prev-empresa-end').innerText = empEnd || 'Endereço da Empresa';
+            document.getElementById('prev-empresa-end').innerText = empEnd || 'Rua das Flores, 123 - São Paulo/SP';
 
             // Dados Cliente
             document.getElementById('prev-cliente-nome').innerText = document.getElementById('cliente-nome').value || 'Nome do Cliente';
@@ -560,13 +716,30 @@
             document.getElementById('prev-validade').innerText = document.getElementById('orcamento-validade').value || '15 dias';
             document.getElementById('prev-obs').innerText = document.getElementById('orcamento-obs').value || 'Nenhuma observação informada.';
 
-            // Estilos Visuais
+            // Aplicar Cores Dinâmicas e Modelos
             const modelo = document.getElementById('select-modelo').value;
             const cor = document.getElementById('select-cor').value;
             const folha = document.getElementById('folha-preview');
 
-            folha.className = `print-area bg-white p-8 rounded-xl shadow-lg border text-slate-800 min-h-[700px] flex flex-col justify-between transition-all template-${modelo}`;
-            folha.style.setProperty('--theme-color', cor);
+            document.documentElement.style.setProperty('--theme-color', cor);
+            folha.className = `print-area bg-white p-8 rounded-2xl shadow-lg border text-slate-800 transition-all flex flex-col justify-between template-${modelo} relative overflow-hidden min-h-[720px]`;
+        }
+
+        // Função de Impressão com Nome de Arquivo Dinâmico
+        function prepararEImprimir() {
+            const clienteInput = document.getElementById('cliente-nome').value.trim();
+            const clienteFormatado = clienteInput ? clienteInput.replace(/[^a-zA-Z0-9à-úÀ-Ú]/g, '_') : 'Cliente';
+            const hoje = new Date();
+            const dataStr = hoje.toLocaleDateString('pt-BR').replace(/\//g, '-');
+            
+            const tituloOriginal = document.title;
+            document.title = `Orcamento_${clienteFormatado}_${dataStr}_FidelisOrca`;
+            
+            window.print();
+            
+            setTimeout(() => {
+                document.title = tituloOriginal;
+            }, 1000);
         }
 
         // Salvamento Local (localStorage)
@@ -580,12 +753,12 @@
                 cor: document.getElementById('select-cor').value,
                 modelo: document.getElementById('select-modelo').value
             };
-            localStorage.setItem('orcapdf_empresa', JSON.stringify(dados));
+            localStorage.setItem('fidelisorca_empresa', JSON.stringify(dados));
             alert('Dados da empresa salvos com sucesso no seu navegador!');
         }
 
         function carregarDadosSalvos() {
-            const salvos = localStorage.getItem('orcapdf_empresa');
+            const salvos = localStorage.getItem('fidelisorca_empresa');
             if(salvos) {
                 const dados = JSON.parse(salvos);
                 if(dados.nome) document.getElementById('empresa-nome').value = dados.nome;
@@ -629,15 +802,21 @@
             document.body.classList.toggle('font-dyslexic');
         }
 
-        // Modais
+        // Funções dos Modais
         function openModal(id) {
-            document.getElementById(id).classList.remove('hidden');
-            document.getElementById(id).classList.add('flex');
+            const modal = document.getElementById(id);
+            if(modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
         }
 
         function closeModal(id) {
-            document.getElementById(id).classList.add('hidden');
-            document.getElementById(id).classList.remove('flex');
+            const modal = document.getElementById(id);
+            if(modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
         }
     </script>
 </body>
